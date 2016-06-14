@@ -22,6 +22,7 @@ This script runs like above screenshot.
 
 .. code-block:: python
 
+
     import sys
     import logging
     from rainbow_logging_handler import RainbowLoggingHandler
@@ -52,6 +53,7 @@ This script runs like above screenshot.
         main_func()
 
 
+
 Usage with Django
 ##################################
 
@@ -59,23 +61,26 @@ Usage with Django
 
 `Django <https://www.djangoproject.com/>`_ is a popular Python web framework.
 
-Put the following to your ``settings.py`` to get more pleasant development server console output::
+Put the following to your ``settings.py`` to get more pleasant development server console output
 
-    # Add this to your settings.py
-    if DEBUG:
-        # Install rainbow logging handler when running Django in develoment mode
-        import sys
-        LOGGING["handlers"]["rainbow"] = {"level": "DEBUG", "class": "rainbow_logging_handler.RainbowLoggingHandler", 'stream': sys.stderr}
-        LOGGING["loggers"]['']["handlers"].append("rainbow")
+.. code-block::
+   
+   if DEBUG:
+      # Install rainbow logging handler when running Django in develoment mode
+      import sys
+      LOGGING["handlers"]["rainbow"] = {"level": "DEBUG", "class": "rainbow_logging_handler.RainbowLoggingHandler", 'stream': sys.stderr}
+      LOGGING["loggers"]['']["handlers"].append("rainbow")
 
 `More about configuring loggers for Django <https://docs.djangoproject.com/en/dev/topics/logging/>`_.
-
+ 
 
 Usage with Pyramid
 #######################
 
-Set ``handler_console`` section in ``develop.ini``:
+Set ``handler_console`` section in ``develop.ini``
 
+.. code-block::
+   
    [handler_console]
    class = rainbow_logging_handler.RainbowLoggingHandler
    args = (sys.stderr,)
