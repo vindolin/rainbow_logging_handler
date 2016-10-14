@@ -168,11 +168,31 @@ class RainbowLoggingHandler(logging.StreamHandler):
         if record.exc_info:
             # Cache the traceback text to avoid converting it multiple times
             # (it's constant anyway)
-            record.exc_text = "".join([
-                self.get_color("red"),
-                formatter.formatException(record.exc_info),
-                self.reset,
-            ])
+
+            # print(record.exc_info)
+            lines = formatter.formatException(record.exc_info).split('\n')
+
+            record.exc_text = lines[0] + '\n'
+
+            for i in range(2, len(lines), 2):
+                location = lines[i - 1]
+                error = lines[i]
+
+                # color all lines that contain site-packages dark
+                if 'site-packages' in location:
+                    record.exc_text += self.get_color('black')
+
+                # make other lines stand out
+                else:
+                    record.exc_text += self.get_color('white', 'red', True)
+
+                record.exc_text += location + '\n'
+                record.exc_text += error + '\n'
+                record.exc_text += self.reset
+
+            record.exc_text += self.get_color('yellow', 'red', True)
+            record.exc_text += lines[len(lines) - 1]
+            record.exc_text += self.reset
 
     def format(self, record):
         """
