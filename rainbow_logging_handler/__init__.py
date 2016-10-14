@@ -169,7 +169,6 @@ class RainbowLoggingHandler(logging.StreamHandler):
             # Cache the traceback text to avoid converting it multiple times
             # (it's constant anyway)
 
-            # print(record.exc_info)
             lines = formatter.formatException(record.exc_info).split('\n')
 
             record.exc_text = lines[0] + '\n'
